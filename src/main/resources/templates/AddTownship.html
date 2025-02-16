@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Add Township</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <style>
+    .navbar ul li a:hover
+   {
+       top: -0.16em;
+       transition: padding .5s, top .35s, box-shadow .4s;
+       box-shadow: 0 0.4rem 0 -0.2rem #0ebac5;
+   }
+
+  .navbar-nav .nav-link.active,
+   {
+       box-shadow: 0 0.4rem 0 -0.2rem #0ebac5;
+   }
+  </style>
+</head>
+<body>
+<div class="container-fluid p-2">
+  <!-- Navigation BAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+      <!-- Brand/Logo -->
+      <a class="navbar-brand fw-bold" href="#" style="color: #6366f1;" th:text="${appName}">AppLogo</a>
+
+      <!-- Hamburger Menu Button (Mobile Toggle) -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Navigation Items -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link " th:href="@{/}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/townships/add}">Add TownShip</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/api/scraper/searchProperty}">Search Land</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{redirect:/contact}">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<div class="container mt-5">
+  <h2 class="text-center bg-primary text-light p-3 rounded">Add New Township</h2>
+
+  <!-- Success and Error Messages -->
+  <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+  <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+
+  <form th:action="@{/townships/add-townShip}" method="post" enctype="multipart/form-data" th:object="${township}">
+
+    <div class="mb-3">
+      <label class="form-label">Township Name</label>
+      <input type="text" th:field="*{name}" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">State</label>
+      <input type="text" th:field="*{state}" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Description</label>
+      <textarea th:field="*{description}" class="form-control" rows="3" required></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Upload Image (JPG Only)</label>
+      <input type="file" name="imageFile"  accept="image/jpeg, image/jpg, image/png" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">Add Township</button>
+  </form>
+</div>
+</body>
+</html>
